@@ -4,33 +4,28 @@
  */
 package edu.udesc.br.projeto;
 
+import edu.udesc.br.projeto.Repositorio.RepositorioMusica;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import java.util.List;
-
 /**
  *
  * @author duda
  */
 public class TelaCadastrarMusica extends javax.swing.JFrame {
+//    private RepositorioMusica musicas = RepositorioMusica.getInstance();
+    private RepositorioMusica repositorioMusica = RepositorioMusica.getInstance();
 
     /**
      * Creates new form TelaCadastrarConta
      */
-    Persistencia persistencia = new Persistencia("musicas.txt");
-    private static ArrayList<Musica> musicas = new ArrayList();
         
-    public static ArrayList<Musica> getMusicas(){
-        
-        return musicas;
-    }
-    
     public static void favoritarMusica(Musica musica){
         musica.isFavorita();
     }
     public TelaCadastrarMusica() {
         initComponents();
-        this.musicas = new ArrayList(this.persistencia.carregar());
+               
         ArrayList<Album> albuns = TelaCadastrarAlbum.getAlbuns();
         for(Album a: albuns){
             cbAlbum.addItem(a);
@@ -178,12 +173,11 @@ public class TelaCadastrarMusica extends javax.swing.JFrame {
         Musica novaMusica = new Musica(duracao, artista, data, titulo, album, false);
         
         //Salvar o aluno BD
-        musicas.add(novaMusica);
-        
+        repositorioMusica.adicionar(novaMusica);
         
         //Exibir uma mensagem de sucesso
         exibirMensagem("Música cadastrado com sucesso!");
-        this.persistirMusicas();
+        
         //Limpar os dados da tela
         limparDados();
     } 
@@ -272,8 +266,4 @@ public class TelaCadastrarMusica extends javax.swing.JFrame {
     private javax.swing.JTextField txtTitulo;
     // End of variables declaration//GEN-END:variables
 
-    private void persistirMusicas() {
-        this.persistencia.persistir(musicas);
-        //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
 }

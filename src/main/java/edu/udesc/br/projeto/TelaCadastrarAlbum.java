@@ -4,6 +4,7 @@
  */
 package edu.udesc.br.projeto;
 
+import edu.udesc.br.projeto.Repositorio.RepositorioMusica;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
@@ -13,6 +14,7 @@ import javax.swing.JOptionPane;
  */
 public class TelaCadastrarAlbum extends javax.swing.JFrame {
 
+    private RepositorioMusica repositorioMusica = RepositorioMusica.getInstance();
     /**
      * Creates new form TelaCadastrar
      */
@@ -160,7 +162,7 @@ public class TelaCadastrarAlbum extends javax.swing.JFrame {
     
     public int buscaDadosMusicas(){
         int duracao = 0;
-        ArrayList<Musica> musica = TelaCadastrarMusica.getMusicas();
+        ArrayList<Musica> musica = repositorioMusica.getMusicas();
         for(Musica a: musica){
             duracao += a.getDuracao();
         }

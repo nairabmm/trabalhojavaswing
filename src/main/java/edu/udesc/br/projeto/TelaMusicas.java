@@ -4,15 +4,17 @@
  */
 package edu.udesc.br.projeto;;
 
-import java.util.ArrayList;
+import edu.udesc.br.projeto.Repositorio.RepositorioMusica;
 import java.util.ArrayList;
 
 /**
  *
  * @author mattheus
  */
-public class TelaMusicas extends javax.swing.JFrame {
+public class TelaMusicas extends javax.swing.JFrame implements RecipienteDeMensagem {
 
+    private Notificador notificador = Notificador.getInstance();
+    private RepositorioMusica repositorioDeMusica = RepositorioMusica.getInstance();
     /**
      * Creates new form TelaPerfil
      */
@@ -24,11 +26,13 @@ public class TelaMusicas extends javax.swing.JFrame {
         } else {
             btnCadastrarMusicas.setVisible(false);
         }
-        inicializarListaMusicas();
+        notificador.inscrever(RepositorioMusica.LISTA_MUSICAS_ALTERADA, this);
+        apresentarListaMusicas();
     }
     
-    public void inicializarListaMusicas(){
-        ArrayList<Musica> musicas = TelaCadastrarMusica.getMusicas();
+    public void apresentarListaMusicas(){
+        ArrayList<Musica> musicas = repositorioDeMusica.getMusicas();
+        txtMusicas.setText("");
         for(Musica a: musicas){
             txtMusicas.append(a.toString() + "\n");
         }
@@ -47,7 +51,6 @@ public class TelaMusicas extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         txtMusicas = new javax.swing.JTextArea();
         btnCadastrarMusicas = new javax.swing.JButton();
-        btnBaixarMusica = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -65,13 +68,6 @@ public class TelaMusicas extends javax.swing.JFrame {
             }
         });
 
-        btnBaixarMusica.setText("Baixar música");
-        btnBaixarMusica.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBaixarMusicaActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -81,18 +77,13 @@ public class TelaMusicas extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addContainerGap())
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(6, 6, 6)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 423, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(72, 72, 72)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnCadastrarMusicas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(31, 31, 31))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnBaixarMusica)
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
+                        .addComponent(btnCadastrarMusicas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(31, 31, 31))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -101,9 +92,7 @@ public class TelaMusicas extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(183, 183, 183)
-                        .addComponent(btnBaixarMusica)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(218, 218, 218)
                         .addComponent(btnCadastrarMusicas))
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -120,10 +109,6 @@ public class TelaMusicas extends javax.swing.JFrame {
         TelaCadastrarMusica telaCadastrarMusica = new TelaCadastrarMusica();
         telaCadastrarMusica.setVisible(true);
     }//GEN-LAST:event_btnCadastrarMusicasActionPerformed
-
-    private void btnBaixarMusicaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBaixarMusicaActionPerformed
-
-    }//GEN-LAST:event_btnBaixarMusicaActionPerformed
     public int buscaDadosConta(){
         int tipoConta = 0;
         ArrayList<Conta> contas = TelaCadastrarConta.getContas();
@@ -175,10 +160,14 @@ public class TelaMusicas extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnBaixarMusica;
     private javax.swing.JButton btnCadastrarMusicas;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea txtMusicas;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void aoReceber() {
+        apresentarListaMusicas();
+    }
 }
