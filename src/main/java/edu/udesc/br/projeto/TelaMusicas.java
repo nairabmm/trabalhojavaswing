@@ -167,7 +167,7 @@ public class TelaMusicas extends javax.swing.JFrame implements RecipienteDeMensa
     // End of variables declaration//GEN-END:variables
 
     @Override
-    public void aoReceber() {
+    public void aoReceber(String chaveDeEvento) {
         apresentarListaMusicas();
     }
 }

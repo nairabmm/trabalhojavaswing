@@ -13,7 +13,6 @@ import java.util.List;
  * @author duda
  */
 public class TelaCadastrarMusica extends javax.swing.JFrame {
-//    private RepositorioMusica musicas = RepositorioMusica.getInstance();
     private RepositorioMusica repositorioMusica = RepositorioMusica.getInstance();
 
     /**
@@ -138,7 +137,6 @@ public class TelaCadastrarMusica extends javax.swing.JFrame {
 
     private void btnCadastrarMusicaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarMusicaActionPerformed
         cadastrarMusica();
-      //  persistirMusicas();
     }//GEN-LAST:event_btnCadastrarMusicaActionPerformed
 
     private void cbAlbumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbAlbumActionPerformed
@@ -158,8 +156,7 @@ public class TelaCadastrarMusica extends javax.swing.JFrame {
         //Obter os dados da música
         Album albumSelecionado = (Album) cbAlbum.getSelectedItem();
         String album = "(Sem Album)";
-        if(albumSelecionado != null)
-        {
+        if(albumSelecionado != null){
              album = albumSelecionado.getTitulo();
         }
 
@@ -194,13 +191,11 @@ public class TelaCadastrarMusica extends javax.swing.JFrame {
         return artista;
     }
     
-     public void limparDados(){
-        //intDuracao.set;
+    public void limparDados(){
         txtTitulo.setText("");
         dtData.setText("");
         intDuracao.setText("");
     }
-    
     
     public void exibirMensagem(String msg){
         JOptionPane.showMessageDialog(null, msg);

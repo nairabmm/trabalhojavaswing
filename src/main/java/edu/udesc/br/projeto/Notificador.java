@@ -48,7 +48,7 @@ public class Notificador {
         Set<RecipienteDeMensagem> ouvintes = inscricoes.get(chaveEvento);
         if (ouvintes != null) {
             for (RecipienteDeMensagem ouvinte : ouvintes) {
-                ouvinte.aoReceber();
+                ouvinte.aoReceber(chaveEvento);
             }
         }
     }

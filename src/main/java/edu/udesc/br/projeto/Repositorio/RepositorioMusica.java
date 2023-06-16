@@ -13,6 +13,10 @@ import java.util.List;
  *
  * @author naira
  */
+
+//Esta é uma implementação de Singleton que eu fiz com ajuda do chatGPT
+//O singleton é um padrão que garante que só exista um único objeto da classe RepositórioMusica na aplicação
+//
 public class RepositorioMusica {
     public static final String LISTA_MUSICAS_ALTERADA = "LISTA_MUSICAS_ALTERADA";
     private static RepositorioMusica instance;

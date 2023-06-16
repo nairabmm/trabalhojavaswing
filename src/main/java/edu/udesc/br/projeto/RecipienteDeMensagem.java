@@ -9,5 +9,5 @@ package edu.udesc.br.projeto;
  * @author naira
  */
 public interface RecipienteDeMensagem {
-    void aoReceber();
+    void aoReceber(String chaveDeEvento);
 }
