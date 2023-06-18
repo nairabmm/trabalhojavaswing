@@ -14,6 +14,7 @@ public class Playlist implements Serializable{
     private int qtdFaixa;// este é uma dado calculado, que muda quando as músicas da playlist mudam
     private int duracao;// este é um dado calculado também
     private String nome;
+    private Ouvinte criadoPor;
     
     public Playlist(String nome)
     {

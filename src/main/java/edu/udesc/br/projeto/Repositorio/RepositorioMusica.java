@@ -27,7 +27,7 @@ public class RepositorioMusica {
     private RepositorioMusica() {
         persistencia = new Persistencia("musicas.txt");
         notificador = Notificador.getInstance();               
-        this.musicas = new ArrayList(this.persistencia.carregar());
+        this.musicas = new ArrayList(this.persistencia.carregarDoDisco());
     }
     
     public static synchronized RepositorioMusica getInstance() {
@@ -46,6 +46,6 @@ public class RepositorioMusica {
     {
         this.musicas.add(musica);
         notificador.publicar(LISTA_MUSICAS_ALTERADA);
-        this.persistencia.persistir(musicas);
+        this.persistencia.escreveEmDisco(musicas);
     }
 }

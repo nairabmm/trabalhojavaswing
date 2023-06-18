@@ -35,9 +35,9 @@ public class TelaPlaylists extends javax.swing.JFrame implements RecipienteDeMen
         }
     }
     
-    public void inicializarListaConta(){
+    public void inicializarListaConta() {
         ArrayList<Conta> conta = TelaCadastrarConta.getContas();
-        for(Conta a: conta){
+        for(Conta a: conta) {
             txtMusicas.append(a.toString() + "\n");
         }
     }
