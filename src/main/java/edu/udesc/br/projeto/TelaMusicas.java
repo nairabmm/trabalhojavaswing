@@ -30,43 +30,41 @@ public class TelaMusicas extends javax.swing.JFrame implements RecipienteDeMensa
             btnCadastrarMusicas.setVisible(true);
             btnDesfavoritar.setVisible(false);
             btnFavoritar.setVisible(false);
+            cbPlaylist.setVisible(false);
             btnAddPlaylist.setVisible(false);
             cbMusicas.setVisible(false);
         } else {
             btnCadastrarMusicas.setVisible(false);
             btnDesfavoritar.setVisible(true);
             btnFavoritar.setVisible(true);
+            cbPlaylist.setVisible(true);
             btnAddPlaylist.setVisible(true);
             cbMusicas.setVisible(true);
         }
         notificador.inscrever(RepositorioMusica.LISTA_MUSICAS_ALTERADA, this);
+        notificador.inscrever(RepositorioPlaylist.LISTA_PLAYLISTS_ALTERADA, this);
         apresentarListaMusicas();
     }
     
     public void apresentarListaMusicas(){
         ArrayList<Musica> musicas = repositorioDeMusica.getMusicas();
+        
+        //Apaga antes de apresentar para que não se dupliquem quando novas músicas forem adicionadas
+        txtMusicas.setText("");
+        cbMusicas.removeAllItems();
+        
         for(Musica a: musicas){
             txtMusicas.append(a.getTitulo()+"\n");
             cbMusicas.addItem(a);
         }
         
+        cbPlaylist.removeAllItems();
         ArrayList<Playlist> playlists = repositorioPlaylists.getPlaylists();
         for(Playlist pl : playlists) {
-            cbPlaylist.addItem(pl.getNome());
+            cbPlaylist.addItem(pl);
         }
     }
-    
-    private static ArrayList<Musica> musicasFav = new ArrayList();
-        
-    public static ArrayList<Musica> getMusicasFav(){
-        
-        return musicasFav;
-    }
-    
-   // model.remove(jList1.getSelectedIndex()); //retorna a posição do item selecionado.
-    //jList1.setModel(model);
-        
-
+       
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -203,24 +201,29 @@ public class TelaMusicas extends javax.swing.JFrame implements RecipienteDeMensa
         // TODO add your handling code here:
     }//GEN-LAST:event_cbMusicasActionPerformed
     public void favoritarMusicas(){
+        //Pega ouvinte da TelaPerfile
+        Ouvinte ouvinte = (Ouvinte) this.conta;
+        
         // Configura o modo de seleção da lista        
         Musica musicaSelecionada = (Musica) cbMusicas.getSelectedItem(); //retorna um Object. Convertemos por meio de Casting.
-        //Favoritar a música
-        TelaCadastrarMusica.favoritarMusica(musicaSelecionada);
         
-        musicasFav.add(musicaSelecionada);
+        //Favoritar a música
+        ouvinte.favoritar(musicaSelecionada);
+        
         //Exibir uma msg
         exibirMensagem("Música favoritada com sucesso");   
     }
     
     public void desfavoritarMusicas(){
+        //Pega ouvinte da TelaPerfile
+        Ouvinte ouvinte = (Ouvinte) this.conta;
+        
         // Configura o modo de seleção da lista
-        
         Musica musicaSelecionada = (Musica) cbMusicas.getSelectedItem(); //retorna um Object. Convertemos por meio de Casting.
-        //Desfavoritar a música
-        TelaCadastrarMusica.desfavoritarMusica(musicaSelecionada);
         
-        musicasFav.add(musicaSelecionada);
+        //Desfavoritar a música
+        ouvinte.desfavoritar(musicaSelecionada);
+        
         //Exibir uma msg
         exibirMensagem("Música retirada dos favoritos com sucesso");   
     }
@@ -232,7 +235,7 @@ public class TelaMusicas extends javax.swing.JFrame implements RecipienteDeMensa
     public void adicionarMusicaPlaylist(){
         Musica musicaSelecionada = (Musica) cbMusicas.getSelectedItem();
         Playlist playlistSel = (Playlist) cbPlaylist.getSelectedItem();
-        playlistSel.setMusica(musicaSelecionada);
+        playlistSel.adicionar(musicaSelecionada);
         
         exibirMensagem("Música adicionada a playlist com sucesso");
     }
@@ -288,7 +291,7 @@ public class TelaMusicas extends javax.swing.JFrame implements RecipienteDeMensa
     private javax.swing.JButton btnDesfavoritar;
     private javax.swing.JButton btnFavoritar;
     private javax.swing.JComboBox<Musica> cbMusicas;
-    private javax.swing.JComboBox<String> cbPlaylist;
+    private javax.swing.JComboBox<Playlist> cbPlaylist;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextArea txtMusicas;

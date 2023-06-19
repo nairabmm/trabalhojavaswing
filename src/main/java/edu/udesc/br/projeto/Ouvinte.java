@@ -4,6 +4,7 @@
  */
 package edu.udesc.br.projeto;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -11,7 +12,7 @@ import java.util.ArrayList;
  * @author duda
  * @author nairabmm
  */
-public class Ouvinte extends Conta{
+public class Ouvinte extends Conta implements Serializable {
     //Lista do albuns favoritados por um ouvinte
     private ArrayList<Album> albunsFavoritados;
     
@@ -36,12 +37,24 @@ public class Ouvinte extends Conta{
         this.albunsFavoritados.add(a);
     }
     
+    public void favoritar(Musica m){
+        this.musicasFavoritadas.add(m);
+    }
+    
     public void desfavoritar(Album a){
         this.albunsFavoritados.remove(a);
     }
     
+    public void desfavoritar(Musica m){
+        this.musicasFavoritadas.remove(m);
+    }
+    
     public boolean isFavoritado(Album a) {
         return this.albunsFavoritados.contains(a);
+    }
+    
+    public boolean isFavoritado(Musica m) {
+        return this.musicasFavoritadas.contains(m);
     }
   
     @Override

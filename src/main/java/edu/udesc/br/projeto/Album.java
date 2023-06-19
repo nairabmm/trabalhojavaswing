@@ -4,12 +4,14 @@
  */
 package edu.udesc.br.projeto;
 
+import java.io.Serializable;
+
 /**
  *
  * @author duda
  * @author nairabmm
  */
-public class Album {
+public class Album implements Serializable{
    private Artista artista;
    private String data;
    private String titulo;

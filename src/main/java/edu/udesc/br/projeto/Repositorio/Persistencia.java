@@ -67,8 +67,7 @@ public class Persistencia {
                 objectOutputStream.writeObject(lista);
             }
         } catch (IOException e) {
-            e.printStackTrace();
-           
+            System.out.println("Arquivo " + nomeDoArquivo + " não encontrardo");
         }
     }
     
@@ -81,7 +80,7 @@ public class Persistencia {
                 lista = (ArrayList<T>) objectInputStream.readObject();
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("Arquivo " + nomeDoArquivo + " não encontrardo");
         }
         if(lista == null)
             return new ArrayList<T>();

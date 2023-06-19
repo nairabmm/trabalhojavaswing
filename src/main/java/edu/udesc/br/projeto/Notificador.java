@@ -6,7 +6,7 @@ package edu.udesc.br.projeto;
 
 /**
  *
- * @author naira
+ * @author nairabmm
  */
 import java.util.HashMap;
 import java.util.HashSet;

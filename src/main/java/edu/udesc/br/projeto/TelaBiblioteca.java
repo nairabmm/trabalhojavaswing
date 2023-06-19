@@ -4,7 +4,6 @@
  */
 package edu.udesc.br.projeto;
 
-import static edu.udesc.br.projeto.TelaMenu.buscaDadosConta;
 import java.util.ArrayList;
 
 /**
@@ -13,6 +12,7 @@ import java.util.ArrayList;
  */
 public class TelaBiblioteca extends javax.swing.JFrame {
     private Conta conta;
+    
     public TelaBiblioteca() {
         initComponents();
         this.conta = buscaDadosConta();
@@ -37,11 +37,10 @@ public class TelaBiblioteca extends javax.swing.JFrame {
     }
     
     public void buscaMusicasFavoritas(){
-        ArrayList<Musica> musicas = TelaMusicas.getMusicasFav();
+        Ouvinte ouvinte = (Ouvinte) this.conta;
+        ArrayList<Musica> musicas = ouvinte.getMusicasFavoritadas();
         for(Musica a: musicas){
-            if (a.isFavorita()){
-                txtMusicas.append(a.getTitulo()+"\n"); 
-            }
+            txtMusicas.append(a.getTitulo()+"\n"); 
         }
     }
     

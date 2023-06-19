@@ -15,25 +15,11 @@ import java.util.List;
 public class TelaCadastrarMusica extends javax.swing.JFrame {
     private RepositorioMusica repositorioMusica = RepositorioMusica.getInstance();
     private Conta conta;
-    /**
-     * Creates new form TelaCadastrarConta
-     */
-        
+ 
     public static Conta buscaDadosConta(){
         return TelaEntrar.getPerfil();
     }
     
-    public static void musicaFavorita(Musica musica){
-        musica.isFavorita();
-    }
-    
-    public static void favoritarMusica(Musica musica){
-        musica.setFavorita(true);
-    }
-     
-    public static void desfavoritarMusica(Musica musica){
-        musica.setFavorita(false);
-    }
     public TelaCadastrarMusica() {
         initComponents();
         this.conta = buscaDadosConta();
@@ -148,19 +134,15 @@ public class TelaCadastrarMusica extends javax.swing.JFrame {
         }
         //Obter os dados da música
         Album albumSelecionado = (Album) cbAlbum.getSelectedItem();
-        String album = "(Sem Album)";
-        if(albumSelecionado != null){
-             album = albumSelecionado.getTitulo();
-        }
-
+        
         String titulo = txtTitulo.getText();
         String data = dtData.getText();
-        String artista = this.conta.getNome();
+        Artista artista = (Artista) this.conta;
         
-        //Criar o aluno
-        Musica novaMusica = new Musica(artista, data, titulo, album, false);
+        //Criar a musica
+        Musica novaMusica = new Musica(artista, data, titulo, albumSelecionado);
         
-        //Salvar o aluno BD
+        //Salvar o musica BD
         repositorioMusica.adicionar(novaMusica);
         
         //Exibir uma mensagem de sucesso

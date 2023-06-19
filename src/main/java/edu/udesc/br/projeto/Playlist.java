@@ -10,25 +10,15 @@ import java.util.ArrayList;
 /**
  *
  * @author duda
+ * @author nairabmm
  */
-public class Playlist implements Serializable{
-    private int qtdFaixa;// este é uma dado calculado, que muda quando as músicas da playlist mudam
+public class Playlist implements Serializable {
     private String nome;
-    private Musica musica;
-
+    private ArrayList<Musica> musicas;
+   
     public Playlist(String nome) {
-        this.qtdFaixa = 0;
         this.nome = nome;
-        this.musica = musica;
-    }
-    
-
-    public int getQtdFaixa() {
-        return qtdFaixa;
-    }
-
-    public void setQtdFaixa(int qtdFaixa) {
-        this.qtdFaixa = qtdFaixa;
+        this.musicas = new ArrayList<Musica>();
     }
 
     public String getNome() {
@@ -38,19 +28,22 @@ public class Playlist implements Serializable{
     public void setNome(String nome) {
         this.nome = nome;
     }
-
-    public Musica getMusica() {
-        return musica;
-    }
-
-    public void setMusica(Musica musica) {
-        this.musica = musica;
+    
+    public void adicionar(Musica m) {
+        this.musicas.add(m);
     }
     
+     public ArrayList<Musica> getMusicas() {
+        return musicas;
+    }
+        
+    public int quantidadeDeFaixas() {
+        return this.musicas.size();
+    }
     
     @Override
     public String toString() {
-        return "Playlist: " + nome + " - Quantidade de faixas: " + qtdFaixa;
+        return "Playlist: " + nome + " - Quantidade de faixas: " + this.quantidadeDeFaixas();
     }
     
     

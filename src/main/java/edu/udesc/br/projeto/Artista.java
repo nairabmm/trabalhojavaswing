@@ -4,12 +4,14 @@
  */
 package edu.udesc.br.projeto;
 
+import java.io.Serializable;
+
 /**
  *
  * @author duda
  * @author nairabmm
  */
-public class Artista extends Conta {
+public class Artista extends Conta implements Serializable{
     private int seguidores;
     
 
@@ -17,6 +19,11 @@ public class Artista extends Conta {
         super(nome, senha, email);
         this.seguidores = 0;
     }
+    
+    public Artista(String nome, String senha, String email, int seguidores) {
+        super(nome, senha, email);
+        this.seguidores = seguidores;
+    }      
     
     public int getSeguidores() {
         return seguidores;

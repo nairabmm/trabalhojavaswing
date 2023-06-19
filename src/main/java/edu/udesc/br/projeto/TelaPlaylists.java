@@ -26,12 +26,19 @@ public class TelaPlaylists extends javax.swing.JFrame implements RecipienteDeMen
     }
     public void apresentaPlaylists(){
         ArrayList<Playlist> playlists = repositorioPlaylists.getPlaylists();
+        
+        //Apaga antes de mostrar todas as playlists
+        txtPlaylist.setText(""); 
+        cbPlaylists.removeAllItems();
+        txtMusicas.setText("");
+        
         for(Playlist pl : playlists) {
             txtPlaylist.append(pl.toString()+"\n");
             cbPlaylists.addItem(pl.getNome());
-            if (pl.getMusica() != null){
-                txtMusicas.append(pl.getMusica().toString()+"\n");
-            }
+            
+            for(Musica m: pl.getMusicas())
+                txtMusicas.append(m.toString()+"\n");
+            
         }
     }
     

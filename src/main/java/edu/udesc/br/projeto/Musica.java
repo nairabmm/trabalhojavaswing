@@ -8,28 +8,26 @@ import java.io.Serializable;
 /**
  *
  * @author duda
+ * @author nairabmm
  */
 public class Musica implements Serializable {
-   private String artista;
+   private Artista artista;
    private String data;
    private String titulo;
-   private String album;
-   private boolean favoritar;
+   private Album album;
 
-    public Musica(String artista, String data, String titulo, String album, boolean favoritar) {
+    public Musica(Artista artista, String data, String titulo, Album album) {
         this.artista = artista;
         this.data = data;
         this.titulo = titulo;
         this.album = album;
-        this.favoritar = favoritar;
     }
 
-
-    public String getArtista() {
+    public Artista getArtista() {
         return artista;
     }
 
-    public void setArtista(String artista) {
+    public void setArtista(Artista artista) {
         this.artista = artista;
     }
 
@@ -49,19 +47,11 @@ public class Musica implements Serializable {
         this.titulo = titulo;
     }
 
-    public boolean isFavorita() {
-        return favoritar;
-    }
-
-    public void setFavorita(boolean favoritar) {
-        this.favoritar = favoritar;
-    }
-
-    public String getAlbum() {
+    public Album getAlbum() {
         return album;
     }
 
-    public void setAlbum(String album) {
+    public void setAlbum(Album album) {
         this.album = album;
     }
     

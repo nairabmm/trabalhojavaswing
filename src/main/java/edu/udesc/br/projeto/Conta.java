@@ -4,12 +4,14 @@
  */
 package edu.udesc.br.projeto;
 
+import java.io.Serializable;
+
 /**
  *
  * @author duda
  * @author nairabmm
  */
-public abstract class Conta {
+public abstract class Conta implements Serializable {
     private String nome;
     private String senha;
     private String email;
