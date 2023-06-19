@@ -4,6 +4,7 @@
  */
 package edu.udesc.br.projeto;
 
+import static edu.udesc.br.projeto.TelaMenu.buscaDadosConta;
 import java.util.ArrayList;
 
 /**
@@ -11,13 +12,15 @@ import java.util.ArrayList;
  * @author duda
  */
 public class TelaBiblioteca extends javax.swing.JFrame {
-
-    /**
-     * Creates new form TelaBiblioteca
-     */
+    private Conta conta;
     public TelaBiblioteca() {
         initComponents();
+        this.conta = buscaDadosConta();
         inicializarBiblioteca();
+    }
+    
+    public static Conta buscaDadosConta(){
+        return TelaEntrar.getPerfil();
     }
     
     public void inicializarBiblioteca(){
@@ -26,11 +29,10 @@ public class TelaBiblioteca extends javax.swing.JFrame {
     }
     
     public void buscaAlbunsFavoritos(){
-        ArrayList<Album> albuns = TelaAlbuns.getAlbunsFav();
+        Ouvinte ouvinte = (Ouvinte) this.conta;
+        ArrayList<Album> albuns = ouvinte.getAlbunsFavoritados();
         for(Album a: albuns){
-            if (a.isFavoritar()){
-                txtAlbuns.append(a.toString()+"\n"); 
-            }
+            txtAlbuns.append(a.toString()+"\n"); 
         }
     }
     
@@ -42,7 +44,7 @@ public class TelaBiblioteca extends javax.swing.JFrame {
             }
         }
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

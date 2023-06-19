@@ -4,39 +4,49 @@
  */
 package edu.udesc.br.projeto;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author duda
+ * @author nairabmm
  */
 public class Ouvinte extends Conta{
-    private String playlist;
-    private String musicaFavorita;
+    //Lista do albuns favoritados por um ouvinte
+    private ArrayList<Album> albunsFavoritados;
+    
+    //Lista das músicas favoritadas por um ouvinte
+    private ArrayList<Musica> musicasFavoritadas;
 
-    public Ouvinte(String playlist, String musicaFavorita, String nome, String senha, String email, int tipoConta) {
-        super(nome, senha, email, tipoConta);
-        this.playlist = playlist;
-        this.musicaFavorita = musicaFavorita;
+    public Ouvinte(String nome, String senha, String email) {
+        super(nome, senha, email);
+        this.albunsFavoritados = new ArrayList<Album>();
+        this.musicasFavoritadas = new ArrayList<Musica>();
+    }
+    
+    public ArrayList<Album> getAlbunsFavoritados() {
+        return albunsFavoritados;
     }
 
-    public String getPlaylist() {
-        return playlist;
+    public ArrayList<Musica> getMusicasFavoritadas() {
+        return musicasFavoritadas;
     }
-
-    public void setPlaylist(String playlist) {
-        this.playlist = playlist;
+    
+    public void favoritar(Album a){
+        this.albunsFavoritados.add(a);
     }
-
-    public String getMusicaFavorita() {
-        return musicaFavorita;
+    
+    public void desfavoritar(Album a){
+        this.albunsFavoritados.remove(a);
     }
-
-    public void setMusicaFavorita(String musicaFavorita) {
-        this.musicaFavorita = musicaFavorita;
+    
+    public boolean isFavoritado(Album a) {
+        return this.albunsFavoritados.contains(a);
     }
-
+  
     @Override
     public String toString() {
-        return "Ouvinte{" + "playlist=" + playlist + ", musicaFavorita=" + musicaFavorita + '}';
+        return "Ouvinte{" + "playlist=" + this.albunsFavoritados.toString() + ", musicaFavorita=" + this.musicasFavoritadas.toString() + '}';
     }
     
 }

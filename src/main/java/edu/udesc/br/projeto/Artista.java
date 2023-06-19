@@ -7,27 +7,17 @@ package edu.udesc.br.projeto;
 /**
  *
  * @author duda
+ * @author nairabmm
  */
 public class Artista extends Conta {
-    private String albuns;
     private int seguidores;
-    private String musicas;
+    
 
-    public Artista(String albuns, int seguidores, String musicas, String nome, String senha, String email, int tipoConta) {
-        super(nome, senha, email, tipoConta);
-        this.albuns = albuns;
-        this.seguidores = seguidores;
-        this.musicas = musicas;
+    public Artista(String nome, String senha, String email) {
+        super(nome, senha, email);
+        this.seguidores = 0;
     }
-
-    public String getAlbuns() {
-        return albuns;
-    }
-
-    public void setAlbuns(String albuns) {
-        this.albuns = albuns;
-    }
-
+    
     public int getSeguidores() {
         return seguidores;
     }
@@ -36,17 +26,9 @@ public class Artista extends Conta {
         this.seguidores = seguidores;
     }
 
-    public String getMusicas() {
-        return musicas;
-    }
-
-    public void setMusicas(String musicas) {
-        this.musicas = musicas;
-    }
-
     @Override
     public String toString() {
-        return "Artista{" + "albuns=" + albuns + ", seguidores=" + seguidores + ", musicas=" + musicas + '}';
+        return "Artista{" + super.toString() + "seguidores=" + seguidores + '}';
     }
     
 }

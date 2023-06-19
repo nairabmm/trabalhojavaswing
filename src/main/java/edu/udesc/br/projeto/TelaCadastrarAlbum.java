@@ -5,6 +5,7 @@
 package edu.udesc.br.projeto;
 
 import edu.udesc.br.projeto.Repositorio.RepositorioMusica;
+import static edu.udesc.br.projeto.TelaMenu.buscaDadosConta;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
@@ -15,6 +16,7 @@ import javax.swing.JOptionPane;
 public class TelaCadastrarAlbum extends javax.swing.JFrame {
 
     private RepositorioMusica repositorioMusica = RepositorioMusica.getInstance();
+    private Conta conta;
     /**
      * Creates new form TelaCadastrar
      */
@@ -25,20 +27,10 @@ public class TelaCadastrarAlbum extends javax.swing.JFrame {
         return albuns;
     }
     
-    public static void albumFavorito(Album album){
-        album.isFavoritar();
-    }
-
-    public static void favoritarAlbum(Album album){
-        album.setFavoritar(true);
-    }
-     
-    public static void desfavoritarAlbum(Album album){
-        album.setFavoritar(false);
-    }
-    
     public TelaCadastrarAlbum() {
         initComponents();
+        this.conta = buscaDadosConta();
+        
     }
 
     /**
@@ -140,10 +132,10 @@ public class TelaCadastrarAlbum extends javax.swing.JFrame {
         String genero = cbGenero.getSelectedItem().toString();
         String titulo = txtTitulo.getText();
         String data = dtData.getText();
-        String artista = buscaDadosArtista();
+        Artista artista = (Artista) this.conta;
         
         //Criar o aluno
-        Album novoAlbum = new Album(artista, data, titulo, genero, false);
+        Album novoAlbum = new Album(artista, data, titulo, genero);
         
         //Salvar o aluno BD
         albuns.add(novoAlbum);
@@ -155,25 +147,12 @@ public class TelaCadastrarAlbum extends javax.swing.JFrame {
         limparDados();
     } 
     
-    public String buscaDadosArtista(){
-        String artista = "";
-        ArrayList<Conta> contas = TelaCadastrarConta.getContas();
-        for(Conta a: contas){
-            int tipoConta = a.getTipoConta();
-            if(tipoConta == 1){
-                artista = a.getNome();
-            }
-        }
-        return artista;
-    }
-    
-     public void limparDados(){
+    public void limparDados(){
         //intDuracao.set;
         txtTitulo.setText("");
         dtData.setText("");
     }
-    
-    
+        
     public void exibirMensagem(String msg){
         JOptionPane.showMessageDialog(null, msg);
     }

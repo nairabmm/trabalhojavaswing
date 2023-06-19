@@ -36,7 +36,6 @@ public class TelaEntrar extends javax.swing.JFrame {
 
         
     public static Conta getPerfil(){
-        
         return perfil;
     }
     

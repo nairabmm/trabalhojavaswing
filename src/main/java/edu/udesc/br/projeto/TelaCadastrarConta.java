@@ -145,20 +145,19 @@ public class TelaCadastrarConta extends javax.swing.JFrame {
             exibirMensagem("Preencha todos os campos!");
             return;
         }
-        //Obter os dados do Aluno[
+        
+        //Obter os dados do Aluno
         String email = txtEmail.getText();
         String nome = txtNome.getText();
         String senha = txtSenha.getText();
-        int tipoConta = 0;
-        if(rbArtista.isSelected()){
-            tipoConta = 1;
-        }
-        if(rbOuvinte.isSelected()){
-            tipoConta = 2;
-        }
         
-        //Criar o aluno
-        Conta novaConta = new Conta(nome, senha, email, tipoConta);
+        //Cria conta com o tipo adequado
+        Conta novaConta;
+        if(rbArtista.isSelected()){
+            novaConta = new Artista(nome, senha, email);
+        } else {            
+            novaConta = new Ouvinte(nome, senha, email);
+        }
         
         //Salvar o aluno BD
         contas.add(novaConta);

@@ -14,11 +14,15 @@ import java.util.List;
  */
 public class TelaCadastrarMusica extends javax.swing.JFrame {
     private RepositorioMusica repositorioMusica = RepositorioMusica.getInstance();
-
+    private Conta conta;
     /**
      * Creates new form TelaCadastrarConta
      */
         
+    public static Conta buscaDadosConta(){
+        return TelaEntrar.getPerfil();
+    }
+    
     public static void musicaFavorita(Musica musica){
         musica.isFavorita();
     }
@@ -32,6 +36,7 @@ public class TelaCadastrarMusica extends javax.swing.JFrame {
     }
     public TelaCadastrarMusica() {
         initComponents();
+        this.conta = buscaDadosConta();
                
         ArrayList<Album> albuns = TelaCadastrarAlbum.getAlbuns();
         for(Album a: albuns){
@@ -150,7 +155,7 @@ public class TelaCadastrarMusica extends javax.swing.JFrame {
 
         String titulo = txtTitulo.getText();
         String data = dtData.getText();
-        String artista = buscaDados();
+        String artista = this.conta.getNome();
         
         //Criar o aluno
         Musica novaMusica = new Musica(artista, data, titulo, album, false);
@@ -164,18 +169,6 @@ public class TelaCadastrarMusica extends javax.swing.JFrame {
         //Limpar os dados da tela
         limparDados();
     } 
-    
-    public String buscaDados(){
-        String artista = "";
-        ArrayList<Conta> contas = TelaCadastrarConta.getContas();
-        for(Conta a: contas){
-            int tipoConta = a.getTipoConta();
-            if(tipoConta == 1){
-                artista = a.getNome();
-            }
-        }
-        return artista;
-    }
     
     public void limparDados(){
         txtTitulo.setText("");

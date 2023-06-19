@@ -18,7 +18,7 @@ public class TelaMenu extends javax.swing.JFrame {
     public TelaMenu() {
         initComponents();
         Conta conta = buscaDadosConta();
-        if(conta.getTipoConta() == 1){
+        if(conta instanceof Artista){
             btnPlaylists.setVisible(false);
             btnBiblioteca.setVisible(false);
         } else {
@@ -190,9 +190,7 @@ public class TelaMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBibliotecaActionPerformed
 
     public static Conta buscaDadosConta(){
-        Conta contas = TelaEntrar.getPerfil();
-        
-        return contas;
+        return TelaEntrar.getPerfil();
     }
     /**
      * @param args the command line arguments

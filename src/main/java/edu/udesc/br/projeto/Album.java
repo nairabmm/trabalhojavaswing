@@ -7,27 +7,26 @@ package edu.udesc.br.projeto;
 /**
  *
  * @author duda
+ * @author nairabmm
  */
 public class Album {
-   private String artista;
+   private Artista artista;
    private String data;
    private String titulo;
    private String genero;
-   private boolean favoritar;
 
-    public Album(String artista, String data, String titulo, String genero, boolean favoritar) {
+    public Album(Artista artista, String data, String titulo, String genero) {
         this.artista = artista;
         this.data = data;
         this.titulo = titulo;
         this.genero = genero;
-        this.favoritar = favoritar;
     }
-
-    public String getArtista() {
+  
+    public Artista getArtista() {
         return artista;
     }
 
-    public void setArtista(String artista) {
+    public void setArtista(Artista artista) {
         this.artista = artista;
     }
 
@@ -53,14 +52,6 @@ public class Album {
 
     public void setGenero(String genero) {
         this.genero = genero;
-    }
-
-    public boolean isFavoritar() {
-        return favoritar;
-    }
-
-    public void setFavoritar(boolean favoritar) {
-        this.favoritar = favoritar;
     }
 
     @Override

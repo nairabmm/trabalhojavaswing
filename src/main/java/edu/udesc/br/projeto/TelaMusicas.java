@@ -10,19 +10,23 @@ import java.util.ArrayList;
 
 /**
  *
+ * @author duda
  * @author mattheus
+ * @author nairabmm
  */
 public class TelaMusicas extends javax.swing.JFrame implements RecipienteDeMensagem {
 
     private Notificador notificador = Notificador.getInstance();
     private RepositorioMusica repositorioDeMusica = RepositorioMusica.getInstance();
     private RepositorioPlaylist repositorioPlaylists = RepositorioPlaylist.getInstance();
+    private Conta conta;
     /**
      * Creates new form TelaPerfil
      */
     public TelaMusicas() {
         initComponents();
-        if(buscaDadosConta().getTipoConta() == 1){
+        conta = buscaDadosConta();
+        if(conta instanceof Artista){
             btnCadastrarMusicas.setVisible(true);
             btnDesfavoritar.setVisible(false);
             btnFavoritar.setVisible(false);
@@ -199,8 +203,7 @@ public class TelaMusicas extends javax.swing.JFrame implements RecipienteDeMensa
         // TODO add your handling code here:
     }//GEN-LAST:event_cbMusicasActionPerformed
     public void favoritarMusicas(){
-        // Configura o modo de seleção da lista
-        
+        // Configura o modo de seleção da lista        
         Musica musicaSelecionada = (Musica) cbMusicas.getSelectedItem(); //retorna um Object. Convertemos por meio de Casting.
         //Favoritar a música
         TelaCadastrarMusica.favoritarMusica(musicaSelecionada);
@@ -223,8 +226,7 @@ public class TelaMusicas extends javax.swing.JFrame implements RecipienteDeMensa
     }
     
     public static Conta buscaDadosConta(){
-        Conta contas = TelaEntrar.getPerfil();
-        return contas;
+        return TelaEntrar.getPerfil();
     }
     
     public void adicionarMusicaPlaylist(){

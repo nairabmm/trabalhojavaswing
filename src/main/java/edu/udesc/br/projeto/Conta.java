@@ -7,18 +7,17 @@ package edu.udesc.br.projeto;
 /**
  *
  * @author duda
+ * @author nairabmm
  */
-public class Conta {
+public abstract class Conta {
     private String nome;
     private String senha;
     private String email;
-    private int tipoConta;
 
-    public Conta(String nome, String senha, String email, int tipoConta) {
+    public Conta(String nome, String senha, String email) {
         this.nome = nome;
         this.senha = senha;
-        this.email = email;
-        this.tipoConta = tipoConta; //1 - Artista | 2 - Ouvinte
+        this.email = email;        
     }
 
     public String getNome() {
@@ -45,19 +44,11 @@ public class Conta {
         this.email = email;
     }
 
-    public int getTipoConta() {
-        return tipoConta;
-    }
-
-    public void setTipoConta(int tipoConta) {
-        this.tipoConta = tipoConta;
-    }
-    
 
     @Override
     public String toString() {
-        String tipo = "";
-        if(tipoConta == 1){
+        String tipo;
+        if(this instanceof Artista){
             tipo = "Artista";
         }else{
             tipo = "Ouvinte";

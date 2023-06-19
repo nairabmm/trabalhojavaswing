@@ -13,14 +13,13 @@ import java.util.ArrayList;
  * @author mattheus
  */
 public class TelaAlbuns extends javax.swing.JFrame {
-
-    /**
-     * Creates new form TelaPerfil
-     */
+    private Conta conta;
+    
     public TelaAlbuns() {
         initComponents();
-        int tipoConta = buscaDadosConta();
-        if(tipoConta == 1){
+        this.conta = buscaDadosConta();
+                
+        if(this.conta instanceof Artista){
             btnCadastrarAlbum.setVisible(true);
             btnDesfavoritar.setVisible(false);
             btnFavoritar.setVisible(false);
@@ -42,14 +41,12 @@ public class TelaAlbuns extends javax.swing.JFrame {
         }
     }
     
+    public static Conta buscaDadosConta(){
+        Conta contas = TelaEntrar.getPerfil();
         
-    private static ArrayList<Album> albunsFav = new ArrayList();
-        
-    public static ArrayList<Album> getAlbunsFav(){
-        
-        return albunsFav;
+        return contas;
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -160,48 +157,43 @@ public class TelaAlbuns extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCadastrarAlbumActionPerformed
 
     private void btnFavoritarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFavoritarActionPerformed
-        favoritarMusicas();
+        favoritar();
     }//GEN-LAST:event_btnFavoritarActionPerformed
 
     private void btnDesfavoritarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDesfavoritarActionPerformed
-        desfavoritarMusicas();
+        defavoritar();
     }//GEN-LAST:event_btnDesfavoritarActionPerformed
 
     private void cbAlbunsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbAlbunsActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cbAlbunsActionPerformed
-        public void favoritarMusicas(){
+    
+    public void favoritar(){
         // Configura o modo de seleção da lista
-        
         Album albumSelecionado = (Album) cbAlbuns.getSelectedItem(); //retorna um Object. Convertemos por meio de Casting.
-        //Favoritar a música
-        TelaCadastrarAlbum.favoritarAlbum(albumSelecionado);
         
-        albunsFav.add(albumSelecionado);
+        //Pega o ouvinte logado
+        Ouvinte ouvinte = (Ouvinte) this.conta;
+        
+        //Favoritar a música
+        ouvinte.favoritar(albumSelecionado);
+        
         //Exibir uma msg
         exibirMensagem("Álbum favoritado com sucesso");   
     }
     
-    public void desfavoritarMusicas(){
+    public void defavoritar(){
         // Configura o modo de seleção da lista
-        
         Album albumSelecionado = (Album) cbAlbuns.getSelectedItem(); //retorna um Object. Convertemos por meio de Casting.
-        //Favoritar a música
-        TelaCadastrarAlbum.desfavoritarAlbum(albumSelecionado);
         
-        albunsFav.add(albumSelecionado);
+        //Pega o usuário logado
+        Ouvinte ouvinte = (Ouvinte) this.conta;
+                
+        //Favoritar a música
+        ouvinte.desfavoritar(albumSelecionado);
+        
         //Exibir uma msg
         exibirMensagem("Música retirada dos favoritos com sucesso");   
-    }
-    
-    
-    public int buscaDadosConta(){
-        int tipoConta = 0;
-        ArrayList<Conta> contas = TelaCadastrarConta.getContas();
-        for(Conta a: contas){
-            tipoConta = a.getTipoConta();
-        }
-        return tipoConta;
     }
     
     public void exibirMensagem(String msg){
