@@ -4,18 +4,26 @@
  */
 package edu.udesc.br.projeto;
 
-import java.util.ArrayList;
-
 /**
  *
  * @author duda
  */
 public class Ouvinte extends Conta{
-    private ArrayList<Musica> musicasFavoritas;
+    private String playlist;
+    private String musicaFavorita;
 
-    public Ouvinte(String playlist, ArrayList<Musica> musicasFavoritas, String nome, String senha, String email, int tipoConta) {
+    public Ouvinte(String playlist, String musicaFavorita, String nome, String senha, String email, int tipoConta) {
         super(nome, senha, email, tipoConta);
-        this.musicasFavoritas = musicasFavoritas;
+        this.playlist = playlist;
+        this.musicaFavorita = musicaFavorita;
+    }
+
+    public String getPlaylist() {
+        return playlist;
+    }
+
+    public void setPlaylist(String playlist) {
+        this.playlist = playlist;
     }
 
     public String getMusicaFavorita() {

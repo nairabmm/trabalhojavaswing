@@ -56,7 +56,13 @@ public class Conta {
 
     @Override
     public String toString() {
-        return "Conta{" + "nome=" + nome + ", senha=" + senha + ", email=" + email + ", tipoConta=" + tipoConta + '}';
+        String tipo = "";
+        if(tipoConta == 1){
+            tipo = "Artista";
+        }else{
+            tipo = "Ouvinte";
+        }
+        return "Nome: " + nome + "\nE-mail: " + email + "\nTipo de conta: " + tipo;
     }
 
     

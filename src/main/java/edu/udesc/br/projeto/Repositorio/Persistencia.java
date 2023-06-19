@@ -52,13 +52,14 @@ import java.io.File;
 import java.util.ArrayList;
 
 public class Persistencia {
+    
     String nomeDoArquivo;
     
     public Persistencia(String nomeDoArquivo) {
         this.nomeDoArquivo = nomeDoArquivo;
     }
     
-    public <T> void escreveEmDisco(ArrayList<T> lista) {
+    public <T> void persistir(ArrayList<T> lista) {
         try {
             try (FileOutputStream fileOutputStream = new FileOutputStream(nomeDoArquivo);
                  ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream)) {
@@ -71,7 +72,7 @@ public class Persistencia {
         }
     }
     
-    public <T> ArrayList<T> carregarDoDisco() {
+    public <T> ArrayList<T> carregar() {
         ArrayList<T> lista = null;
         try {
             try (FileInputStream fileInputStream = new FileInputStream(nomeDoArquivo);

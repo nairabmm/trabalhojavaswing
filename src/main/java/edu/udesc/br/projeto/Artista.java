@@ -9,13 +9,13 @@ package edu.udesc.br.projeto;
  * @author duda
  */
 public class Artista extends Conta {
-  //  private String albuns;
+    private String albuns;
     private int seguidores;
-    //private String musicas;
+    private String musicas;
 
     public Artista(String albuns, int seguidores, String musicas, String nome, String senha, String email, int tipoConta) {
         super(nome, senha, email, tipoConta);
-    
+        this.albuns = albuns;
         this.seguidores = seguidores;
         this.musicas = musicas;
     }

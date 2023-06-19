@@ -10,15 +10,13 @@ import java.io.Serializable;
  * @author duda
  */
 public class Musica implements Serializable {
-   private int duracao;
    private String artista;
    private String data;
    private String titulo;
    private String album;
    private boolean favoritar;
 
-    public Musica(int duracao, String artista, String data, String titulo, String album, boolean favoritar) {
-        this.duracao = duracao;
+    public Musica(String artista, String data, String titulo, String album, boolean favoritar) {
         this.artista = artista;
         this.data = data;
         this.titulo = titulo;
@@ -26,13 +24,6 @@ public class Musica implements Serializable {
         this.favoritar = favoritar;
     }
 
-    public int getDuracao() {
-        return duracao;
-    }
-
-    public void setDuracao(int duracao) {
-        this.duracao = duracao;
-    }
 
     public String getArtista() {
         return artista;
@@ -86,7 +77,7 @@ public class Musica implements Serializable {
 
     @Override
     public String toString() {
-        return "Musica{" + "duracao=" + duracao + ", artista=" + artista + ", data=" + data + ", titulo=" + titulo + ", album=" + album + ", favoritar=" + favoritar + '}';
+        return "Título: " + titulo;
     }
 
     

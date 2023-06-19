@@ -5,6 +5,8 @@
 package edu.udesc.br.projeto;;
 
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import java.util.ArrayList;
 
 /**
  *
@@ -20,8 +22,14 @@ public class TelaAlbuns extends javax.swing.JFrame {
         int tipoConta = buscaDadosConta();
         if(tipoConta == 1){
             btnCadastrarAlbum.setVisible(true);
+            btnDesfavoritar.setVisible(false);
+            btnFavoritar.setVisible(false);
+            cbAlbuns.setVisible(false);
         } else {
             btnCadastrarAlbum.setVisible(false);
+            btnDesfavoritar.setVisible(true);
+            btnFavoritar.setVisible(true);
+            cbAlbuns.setVisible(true);
         }
         inicializarListaAlbum();
     }
@@ -29,8 +37,17 @@ public class TelaAlbuns extends javax.swing.JFrame {
     public void inicializarListaAlbum(){
         ArrayList<Album> albuns = TelaCadastrarAlbum.getAlbuns();
         for(Album a: albuns){
-            listAlbuns.append(a.toString());  
+            listAlbuns.append(a.toString()+"\n");
+            cbAlbuns.addItem(a);
         }
+    }
+    
+        
+    private static ArrayList<Album> albunsFav = new ArrayList();
+        
+    public static ArrayList<Album> getAlbunsFav(){
+        
+        return albunsFav;
     }
 
     /**
@@ -46,6 +63,9 @@ public class TelaAlbuns extends javax.swing.JFrame {
         btnCadastrarAlbum = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         listAlbuns = new javax.swing.JTextArea();
+        btnFavoritar = new javax.swing.JButton();
+        btnDesfavoritar = new javax.swing.JButton();
+        cbAlbuns = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -63,6 +83,26 @@ public class TelaAlbuns extends javax.swing.JFrame {
         listAlbuns.setRows(5);
         jScrollPane1.setViewportView(listAlbuns);
 
+        btnFavoritar.setText("Favoritar Álbum");
+        btnFavoritar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFavoritarActionPerformed(evt);
+            }
+        });
+
+        btnDesfavoritar.setText("Retirar dos favoritos");
+        btnDesfavoritar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDesfavoritarActionPerformed(evt);
+            }
+        });
+
+        cbAlbuns.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbAlbunsActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -70,23 +110,43 @@ public class TelaAlbuns extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(19, 19, 19)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 412, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(29, 29, 29)
-                .addComponent(btnCadastrarAlbum, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(31, 31, 31))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 327, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(cbAlbuns, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(btnCadastrarAlbum, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(0, 53, Short.MAX_VALUE)))
+                                .addGap(34, 34, 34))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnDesfavoritar)
+                                    .addComponent(btnFavoritar))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(24, 24, 24))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(7, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
+                        .addComponent(cbAlbuns, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(btnCadastrarAlbum))
-                .addGap(26, 26, 26))
+                        .addComponent(btnFavoritar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnDesfavoritar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnCadastrarAlbum))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(16, 16, 16))
         );
 
         btnCadastrarAlbum.getAccessibleContext().setAccessibleName("Cadastrar");
@@ -98,6 +158,43 @@ public class TelaAlbuns extends javax.swing.JFrame {
         TelaCadastrarAlbum telaCadastrarAlbum = new TelaCadastrarAlbum();
         telaCadastrarAlbum.setVisible(true);
     }//GEN-LAST:event_btnCadastrarAlbumActionPerformed
+
+    private void btnFavoritarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFavoritarActionPerformed
+        favoritarMusicas();
+    }//GEN-LAST:event_btnFavoritarActionPerformed
+
+    private void btnDesfavoritarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDesfavoritarActionPerformed
+        desfavoritarMusicas();
+    }//GEN-LAST:event_btnDesfavoritarActionPerformed
+
+    private void cbAlbunsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbAlbunsActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbAlbunsActionPerformed
+        public void favoritarMusicas(){
+        // Configura o modo de seleção da lista
+        
+        Album albumSelecionado = (Album) cbAlbuns.getSelectedItem(); //retorna um Object. Convertemos por meio de Casting.
+        //Favoritar a música
+        TelaCadastrarAlbum.favoritarAlbum(albumSelecionado);
+        
+        albunsFav.add(albumSelecionado);
+        //Exibir uma msg
+        exibirMensagem("Álbum favoritado com sucesso");   
+    }
+    
+    public void desfavoritarMusicas(){
+        // Configura o modo de seleção da lista
+        
+        Album albumSelecionado = (Album) cbAlbuns.getSelectedItem(); //retorna um Object. Convertemos por meio de Casting.
+        //Favoritar a música
+        TelaCadastrarAlbum.desfavoritarAlbum(albumSelecionado);
+        
+        albunsFav.add(albumSelecionado);
+        //Exibir uma msg
+        exibirMensagem("Música retirada dos favoritos com sucesso");   
+    }
+    
+    
     public int buscaDadosConta(){
         int tipoConta = 0;
         ArrayList<Conta> contas = TelaCadastrarConta.getContas();
@@ -105,6 +202,10 @@ public class TelaAlbuns extends javax.swing.JFrame {
             tipoConta = a.getTipoConta();
         }
         return tipoConta;
+    }
+    
+    public void exibirMensagem(String msg){
+        JOptionPane.showMessageDialog(null, msg);
     }
     /**
      * @param args the command line arguments
@@ -158,6 +259,9 @@ public class TelaAlbuns extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCadastrarAlbum;
+    private javax.swing.JButton btnDesfavoritar;
+    private javax.swing.JButton btnFavoritar;
+    private javax.swing.JComboBox<Album> cbAlbuns;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea listAlbuns;

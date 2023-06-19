@@ -141,17 +141,16 @@ public class TelaEntrar extends javax.swing.JFrame {
     
     
     public void buscaDadosConta(){
-        int autenticou = 0;
         String emailAut;
         String senhaAut;
         ArrayList<Conta> contas = TelaCadastrarConta.getContas();
         for(Conta a: contas){
             emailAut = a.getEmail();
             senhaAut = a.getSenha();
-            autenticou = autenticar(emailAut, senhaAut);
+            
             perfil = a;
             
-            if (autenticou == 1) {
+            if (autenticar(emailAut, senhaAut) == true) {
                 //Exibir uma mensagem de sucesso
                 exibirMensagem("Login efetuado com sucesso!");
                 limparDados();
@@ -171,14 +170,8 @@ public class TelaEntrar extends javax.swing.JFrame {
         telaMenu.setVisible(true);
     }
     
-    public int autenticar(String emailAut, String senhaAut) {
-    int autenticou = 0;
-    if (email.equals(emailAut) && senha.equals(senhaAut)) {
-        autenticou = 1;
-    } else if(!email.equals(emailAut) || !senha.equals(senhaAut)){
-        autenticou = 0;
-        }
-        return autenticou;
+    public boolean autenticar(String emailAut, String senhaAut) {
+        return email.equals(emailAut) && senha.equals(senhaAut);
     }
     
     public void limparDados(){

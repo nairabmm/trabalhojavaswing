@@ -25,8 +25,16 @@ public class TelaCadastrarAlbum extends javax.swing.JFrame {
         return albuns;
     }
     
-    public static void favoritarAlbum(Album album){
+    public static void albumFavorito(Album album){
         album.isFavoritar();
+    }
+
+    public static void favoritarAlbum(Album album){
+        album.setFavoritar(true);
+    }
+     
+    public static void desfavoritarAlbum(Album album){
+        album.setFavoritar(false);
     }
     
     public TelaCadastrarAlbum() {
@@ -130,13 +138,12 @@ public class TelaCadastrarAlbum extends javax.swing.JFrame {
         }
         //Obter os dados da música
         String genero = cbGenero.getSelectedItem().toString();
-        int duracao = buscaDadosMusicas();
         String titulo = txtTitulo.getText();
         String data = dtData.getText();
         String artista = buscaDadosArtista();
         
         //Criar o aluno
-        Album novoAlbum = new Album(duracao, artista, data, titulo, genero, false);
+        Album novoAlbum = new Album(artista, data, titulo, genero, false);
         
         //Salvar o aluno BD
         albuns.add(novoAlbum);
@@ -158,15 +165,6 @@ public class TelaCadastrarAlbum extends javax.swing.JFrame {
             }
         }
         return artista;
-    }
-    
-    public int buscaDadosMusicas(){
-        int duracao = 0;
-        ArrayList<Musica> musica = repositorioMusica.getMusicas();
-        for(Musica a: musica){
-            duracao += a.getDuracao();
-        }
-        return duracao;
     }
     
      public void limparDados(){

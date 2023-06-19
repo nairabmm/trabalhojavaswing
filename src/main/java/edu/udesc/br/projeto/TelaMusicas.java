@@ -3,8 +3,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package edu.udesc.br.projeto;;
-
+import edu.udesc.br.projeto.Repositorio.RepositorioPlaylist;
 import edu.udesc.br.projeto.Repositorio.RepositorioMusica;
+import javax.swing.JOptionPane;
 import java.util.ArrayList;
 
 /**
@@ -15,16 +16,24 @@ public class TelaMusicas extends javax.swing.JFrame implements RecipienteDeMensa
 
     private Notificador notificador = Notificador.getInstance();
     private RepositorioMusica repositorioDeMusica = RepositorioMusica.getInstance();
+    private RepositorioPlaylist repositorioPlaylists = RepositorioPlaylist.getInstance();
     /**
      * Creates new form TelaPerfil
      */
     public TelaMusicas() {
         initComponents();
-        int tipoConta = buscaDadosConta();
-        if(tipoConta == 1){
+        if(buscaDadosConta().getTipoConta() == 1){
             btnCadastrarMusicas.setVisible(true);
+            btnDesfavoritar.setVisible(false);
+            btnFavoritar.setVisible(false);
+            btnAddPlaylist.setVisible(false);
+            cbMusicas.setVisible(false);
         } else {
             btnCadastrarMusicas.setVisible(false);
+            btnDesfavoritar.setVisible(true);
+            btnFavoritar.setVisible(true);
+            btnAddPlaylist.setVisible(true);
+            cbMusicas.setVisible(true);
         }
         notificador.inscrever(RepositorioMusica.LISTA_MUSICAS_ALTERADA, this);
         apresentarListaMusicas();
@@ -32,11 +41,27 @@ public class TelaMusicas extends javax.swing.JFrame implements RecipienteDeMensa
     
     public void apresentarListaMusicas(){
         ArrayList<Musica> musicas = repositorioDeMusica.getMusicas();
-        txtMusicas.setText("");
         for(Musica a: musicas){
-            txtMusicas.append(a.toString() + "\n");
+            txtMusicas.append(a.getTitulo()+"\n");
+            cbMusicas.addItem(a);
+        }
+        
+        ArrayList<Playlist> playlists = repositorioPlaylists.getPlaylists();
+        for(Playlist pl : playlists) {
+            cbPlaylist.addItem(pl.getNome());
         }
     }
+    
+    private static ArrayList<Musica> musicasFav = new ArrayList();
+        
+    public static ArrayList<Musica> getMusicasFav(){
+        
+        return musicasFav;
+    }
+    
+   // model.remove(jList1.getSelectedIndex()); //retorna a posição do item selecionado.
+    //jList1.setModel(model);
+        
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -48,23 +73,56 @@ public class TelaMusicas extends javax.swing.JFrame implements RecipienteDeMensa
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        txtMusicas = new javax.swing.JTextArea();
         btnCadastrarMusicas = new javax.swing.JButton();
+        btnFavoritar = new javax.swing.JButton();
+        btnAddPlaylist = new javax.swing.JButton();
+        cbMusicas = new javax.swing.JComboBox<>();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        txtMusicas = new javax.swing.JTextArea();
+        btnDesfavoritar = new javax.swing.JButton();
+        cbPlaylist = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setText("Músicas");
 
-        txtMusicas.setEditable(false);
-        txtMusicas.setColumns(20);
-        txtMusicas.setRows(5);
-        jScrollPane1.setViewportView(txtMusicas);
-
         btnCadastrarMusicas.setText("Cadastrar Músicas");
         btnCadastrarMusicas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCadastrarMusicasActionPerformed(evt);
+            }
+        });
+
+        btnFavoritar.setText("Favoritar Música");
+        btnFavoritar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFavoritarActionPerformed(evt);
+            }
+        });
+
+        btnAddPlaylist.setText("Adicionar a uma playlist");
+        btnAddPlaylist.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddPlaylistActionPerformed(evt);
+            }
+        });
+
+        cbMusicas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbMusicasActionPerformed(evt);
+            }
+        });
+
+        txtMusicas.setEditable(false);
+        txtMusicas.setColumns(20);
+        txtMusicas.setRows(5);
+        jScrollPane2.setViewportView(txtMusicas);
+
+        btnDesfavoritar.setText("Retirar dos favoritos");
+        btnDesfavoritar.setToolTipText("");
+        btnDesfavoritar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDesfavoritarActionPerformed(evt);
             }
         });
 
@@ -76,28 +134,43 @@ public class TelaMusicas extends javax.swing.JFrame implements RecipienteDeMensa
                 .addGap(19, 19, 19)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 253, Short.MAX_VALUE)
+                            .addComponent(cbMusicas, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnCadastrarMusicas, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnFavoritar)
+                            .addComponent(btnAddPlaylist)
+                            .addComponent(btnDesfavoritar)
+                            .addComponent(cbPlaylist, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(33, 33, 33))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 423, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(72, 72, 72)
-                        .addComponent(btnCadastrarMusicas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(31, 31, 31))))
+                        .addComponent(jLabel1)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(13, Short.MAX_VALUE)
+                .addContainerGap(18, Short.MAX_VALUE)
                 .addComponent(jLabel1)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(218, 218, 218)
-                        .addComponent(btnCadastrarMusicas))
-                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(cbMusicas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(26, 26, 26))
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnFavoritar)
+                        .addGap(12, 12, 12)
+                        .addComponent(btnDesfavoritar)
+                        .addGap(36, 36, 36)
+                        .addComponent(cbPlaylist, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnAddPlaylist)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnCadastrarMusicas)))
+                .addGap(32, 32, 32))
         );
 
         btnCadastrarMusicas.getAccessibleContext().setAccessibleName("Cadastrar");
@@ -109,13 +182,61 @@ public class TelaMusicas extends javax.swing.JFrame implements RecipienteDeMensa
         TelaCadastrarMusica telaCadastrarMusica = new TelaCadastrarMusica();
         telaCadastrarMusica.setVisible(true);
     }//GEN-LAST:event_btnCadastrarMusicasActionPerformed
-    public int buscaDadosConta(){
-        int tipoConta = 0;
-        ArrayList<Conta> contas = TelaCadastrarConta.getContas();
-        for(Conta a: contas){
-            tipoConta = a.getTipoConta();
-        }
-        return tipoConta;
+
+    private void btnFavoritarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFavoritarActionPerformed
+        favoritarMusicas();
+    }//GEN-LAST:event_btnFavoritarActionPerformed
+
+    private void btnDesfavoritarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDesfavoritarActionPerformed
+        desfavoritarMusicas();
+    }//GEN-LAST:event_btnDesfavoritarActionPerformed
+
+    private void btnAddPlaylistActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddPlaylistActionPerformed
+       adicionarMusicaPlaylist();
+    }//GEN-LAST:event_btnAddPlaylistActionPerformed
+
+    private void cbMusicasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbMusicasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbMusicasActionPerformed
+    public void favoritarMusicas(){
+        // Configura o modo de seleção da lista
+        
+        Musica musicaSelecionada = (Musica) cbMusicas.getSelectedItem(); //retorna um Object. Convertemos por meio de Casting.
+        //Favoritar a música
+        TelaCadastrarMusica.favoritarMusica(musicaSelecionada);
+        
+        musicasFav.add(musicaSelecionada);
+        //Exibir uma msg
+        exibirMensagem("Música favoritada com sucesso");   
+    }
+    
+    public void desfavoritarMusicas(){
+        // Configura o modo de seleção da lista
+        
+        Musica musicaSelecionada = (Musica) cbMusicas.getSelectedItem(); //retorna um Object. Convertemos por meio de Casting.
+        //Desfavoritar a música
+        TelaCadastrarMusica.desfavoritarMusica(musicaSelecionada);
+        
+        musicasFav.add(musicaSelecionada);
+        //Exibir uma msg
+        exibirMensagem("Música retirada dos favoritos com sucesso");   
+    }
+    
+    public static Conta buscaDadosConta(){
+        Conta contas = TelaEntrar.getPerfil();
+        return contas;
+    }
+    
+    public void adicionarMusicaPlaylist(){
+        Musica musicaSelecionada = (Musica) cbMusicas.getSelectedItem();
+        Playlist playlistSel = (Playlist) cbPlaylist.getSelectedItem();
+        playlistSel.setMusica(musicaSelecionada);
+        
+        exibirMensagem("Música adicionada a playlist com sucesso");
+    }
+    
+    public void exibirMensagem(String msg){
+        JOptionPane.showMessageDialog(null, msg);
     }
     /**
      * @param args the command line arguments
@@ -160,9 +281,14 @@ public class TelaMusicas extends javax.swing.JFrame implements RecipienteDeMensa
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAddPlaylist;
     private javax.swing.JButton btnCadastrarMusicas;
+    private javax.swing.JButton btnDesfavoritar;
+    private javax.swing.JButton btnFavoritar;
+    private javax.swing.JComboBox<Musica> cbMusicas;
+    private javax.swing.JComboBox<String> cbPlaylist;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextArea txtMusicas;
     // End of variables declaration//GEN-END:variables
 

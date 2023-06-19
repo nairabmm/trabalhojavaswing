@@ -34,6 +34,16 @@ public class Notificador {
         inscricoes.put(chave, recipientes);
     }
 
+    public void cancelarInscricao(String chave, RecipienteDeMensagem recipienteCancelando) {
+        Set<RecipienteDeMensagem> recipientes = inscricoes.get(chave);
+        if (recipientes != null) {
+            recipientes.remove(recipienteCancelando);
+            if (recipientes.isEmpty()) {
+                inscricoes.remove(chave);
+            }
+        }
+    }
+
     public void publicar(String chaveEvento) {
         Set<RecipienteDeMensagem> ouvintes = inscricoes.get(chaveEvento);
         if (ouvintes != null) {

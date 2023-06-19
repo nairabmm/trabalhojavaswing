@@ -7,8 +7,6 @@ package edu.udesc.br.projeto;;
 import edu.udesc.br.projeto.Repositorio.RepositorioPlaylist;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
-import edu.udesc.br.projeto.Repositorio.RepositorioPlaylist;
-import java.util.ArrayList;
 
 /**
  *
@@ -25,23 +23,19 @@ public class TelaPlaylists extends javax.swing.JFrame implements RecipienteDeMen
         initComponents();
         apresentaPlaylists();
         notificador.inscrever(RepositorioPlaylist.LISTA_PLAYLISTS_ALTERADA, this);
-        inicializarListaConta();
     }
     public void apresentaPlaylists(){
         ArrayList<Playlist> playlists = repositorioPlaylists.getPlaylists();
-        txtPlaylists.setText("");
         for(Playlist pl : playlists) {
-            txtPlaylists.append(pl.toString() + "\n");
+            txtPlaylist.append(pl.toString()+"\n");
+            cbPlaylists.addItem(pl.getNome());
+            if (pl.getMusica() != null){
+                txtMusicas.append(pl.getMusica().toString()+"\n");
+            }
         }
     }
     
-    public void inicializarListaConta() {
-        ArrayList<Conta> conta = TelaCadastrarConta.getContas();
-        for(Conta a: conta) {
-            txtMusicas.append(a.toString() + "\n");
-        }
-    }
-
+   
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -56,8 +50,9 @@ public class TelaPlaylists extends javax.swing.JFrame implements RecipienteDeMen
         txtNovaPlaylist = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        cbPlaylists = new javax.swing.JComboBox<>();
         jScrollPane2 = new javax.swing.JScrollPane();
-        txtPlaylists = new javax.swing.JTextArea();
+        txtPlaylist = new javax.swing.JTextArea();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
 
@@ -86,65 +81,59 @@ public class TelaPlaylists extends javax.swing.JFrame implements RecipienteDeMen
         jLabel1.setForeground(new java.awt.Color(66, 66, 66));
         jLabel1.setText("Playlists");
 
-        txtPlaylists.setEditable(false);
-        txtPlaylists.setColumns(20);
-        txtPlaylists.setRows(5);
-        jScrollPane2.setViewportView(txtPlaylists);
+        txtPlaylist.setEditable(false);
+        txtPlaylist.setColumns(20);
+        txtPlaylist.setRows(5);
+        jScrollPane2.setViewportView(txtPlaylist);
 
-        jLabel2.setForeground(new java.awt.Color(99, 99, 99));
-        jLabel2.setText("0 músicas");
+        jLabel2.setText("Selecione a playlist:");
 
-        jLabel3.setForeground(new java.awt.Color(99, 99, 99));
-        jLabel3.setText("0 minutos");
+        jLabel3.setText("Músicas da playlist");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGap(19, 19, 19)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(txtNovaPlaylist, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton1))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addGap(0, 0, Short.MAX_VALUE))))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGap(24, 24, 24)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(19, 19, 19)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(txtNovaPlaylist, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 374, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel3)))))
-                .addContainerGap(23, Short.MAX_VALUE))
+                        .addComponent(jButton1)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cbPlaylists, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel3))
+                .addGap(20, 20, 20))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(16, 16, 16)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton1)
-                            .addComponent(txtNovaPlaylist, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel1)
+                            .addComponent(cbPlaylists, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel2))
-                        .addGap(9, 9, 9)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(27, 27, 27))
+                            .addComponent(txtNovaPlaylist, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton1))
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(33, Short.MAX_VALUE))
         );
 
         pack();
@@ -161,7 +150,7 @@ public class TelaPlaylists extends javax.swing.JFrame implements RecipienteDeMen
     private void adicionaPlaylist(){
         //Validação
         if(!validarCampos()){
-            exibirMensagem("Uma playlist precisa de um nome.");
+            exibirMensagem("A playlist precisa de um nome.");
             return;
         }
         
@@ -171,8 +160,10 @@ public class TelaPlaylists extends javax.swing.JFrame implements RecipienteDeMen
         
         //Salva pro BD
         repositorioPlaylists.adicionar(novaPlaylist);
+       
         
         limparDados();
+        apresentaPlaylists();
     }
     
     private void limparDados(){
@@ -228,6 +219,7 @@ public class TelaPlaylists extends javax.swing.JFrame implements RecipienteDeMen
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> cbPlaylists;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -236,7 +228,7 @@ public class TelaPlaylists extends javax.swing.JFrame implements RecipienteDeMen
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextArea txtMusicas;
     private javax.swing.JTextField txtNovaPlaylist;
-    private javax.swing.JTextArea txtPlaylists;
+    private javax.swing.JTextArea txtPlaylist;
     // End of variables declaration//GEN-END:variables
 
     @Override

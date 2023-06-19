@@ -19,8 +19,16 @@ public class TelaCadastrarMusica extends javax.swing.JFrame {
      * Creates new form TelaCadastrarConta
      */
         
-    public static void favoritarMusica(Musica musica){
+    public static void musicaFavorita(Musica musica){
         musica.isFavorita();
+    }
+    
+    public static void favoritarMusica(Musica musica){
+        musica.setFavorita(true);
+    }
+     
+    public static void desfavoritarMusica(Musica musica){
+        musica.setFavorita(false);
     }
     public TelaCadastrarMusica() {
         initComponents();
@@ -43,21 +51,17 @@ public class TelaCadastrarMusica extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         txtTitulo = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         btnCadastrarMusica = new javax.swing.JButton();
         cbAlbum = new javax.swing.JComboBox<>();
         dtData = new javax.swing.JFormattedTextField();
         jLabel5 = new javax.swing.JLabel();
-        intDuracao = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setText("Cadastrar música:");
 
         jLabel2.setText("Título");
-
-        jLabel3.setText("Duração (em minutos)");
 
         jLabel4.setText("Álbum");
 
@@ -74,13 +78,7 @@ public class TelaCadastrarMusica extends javax.swing.JFrame {
             }
         });
 
-        jLabel5.setText("Data");
-
-        intDuracao.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                intDuracaoActionPerformed(evt);
-            }
-        });
+        jLabel5.setText("Ano");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -89,21 +87,19 @@ public class TelaCadastrarMusica extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(80, 80, 80)
-                        .addComponent(btnCadastrarMusica))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(14, 14, 14)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(jLabel4)
-                                .addComponent(jLabel3)
                                 .addComponent(jLabel2)
                                 .addComponent(jLabel1)
                                 .addComponent(txtTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, 268, Short.MAX_VALUE)
                                 .addComponent(cbAlbum, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addComponent(jLabel5)
-                            .addComponent(dtData, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(intDuracao, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(dtData, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(76, 76, 76)
+                        .addComponent(btnCadastrarMusica)))
                 .addContainerGap(35, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -116,10 +112,6 @@ public class TelaCadastrarMusica extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(intDuracao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cbAlbum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -127,9 +119,9 @@ public class TelaCadastrarMusica extends javax.swing.JFrame {
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(dtData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
                 .addComponent(btnCadastrarMusica)
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addGap(16, 16, 16))
         );
 
         pack();
@@ -142,10 +134,6 @@ public class TelaCadastrarMusica extends javax.swing.JFrame {
     private void cbAlbumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbAlbumActionPerformed
     //
     }//GEN-LAST:event_cbAlbumActionPerformed
-
-    private void intDuracaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_intDuracaoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_intDuracaoActionPerformed
 
     public void cadastrarMusica() {
         //Validação
@@ -160,14 +148,12 @@ public class TelaCadastrarMusica extends javax.swing.JFrame {
              album = albumSelecionado.getTitulo();
         }
 
-        String duracaoText = intDuracao.getText();
-        int duracao = Integer.parseInt(duracaoText);
         String titulo = txtTitulo.getText();
         String data = dtData.getText();
         String artista = buscaDados();
         
         //Criar o aluno
-        Musica novaMusica = new Musica(duracao, artista, data, titulo, album, false);
+        Musica novaMusica = new Musica(artista, data, titulo, album, false);
         
         //Salvar o aluno BD
         repositorioMusica.adicionar(novaMusica);
@@ -194,7 +180,6 @@ public class TelaCadastrarMusica extends javax.swing.JFrame {
     public void limparDados(){
         txtTitulo.setText("");
         dtData.setText("");
-        intDuracao.setText("");
     }
     
     public void exibirMensagem(String msg){
@@ -202,7 +187,7 @@ public class TelaCadastrarMusica extends javax.swing.JFrame {
     }
     
     public boolean validarCampos(){
-        if(intDuracao.getText().isBlank() || txtTitulo.getText().isBlank() || dtData.getText().isBlank())
+        if(txtTitulo.getText().isBlank() || dtData.getText().isBlank())
             return false;
         return true;
     }
@@ -252,10 +237,8 @@ public class TelaCadastrarMusica extends javax.swing.JFrame {
     private javax.swing.JButton btnCadastrarMusica;
     private javax.swing.JComboBox<Album> cbAlbum;
     private javax.swing.JFormattedTextField dtData;
-    private javax.swing.JTextField intDuracao;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JTextField txtTitulo;

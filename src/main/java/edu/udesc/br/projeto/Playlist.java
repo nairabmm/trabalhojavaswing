@@ -5,6 +5,7 @@
 package edu.udesc.br.projeto;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  *
@@ -12,30 +13,15 @@ import java.io.Serializable;
  */
 public class Playlist implements Serializable{
     private int qtdFaixa;// este é uma dado calculado, que muda quando as músicas da playlist mudam
-    private int duracao;// este é um dado calculado também
     private String nome;
-    private Ouvinte criadoPor;
-    
-    public Playlist(String nome)
-    {
-        this.nome = nome;
-        this.duracao = 0;
+    private Musica musica;
+
+    public Playlist(String nome) {
         this.qtdFaixa = 0;
+        this.nome = nome;
+        this.musica = musica;
     }
-
-    public Playlist(int duracao, int qtdFaixa, String nome) {
-        this(nome);
-        this.duracao = duracao;
-        this.qtdFaixa = qtdFaixa;
-    }
-
-    public int getDuracao() {
-        return duracao;
-    }
-
-    public void setDuracao(int duracao) {
-        this.duracao = duracao;
-    }
+    
 
     public int getQtdFaixa() {
         return qtdFaixa;
@@ -52,10 +38,19 @@ public class Playlist implements Serializable{
     public void setNome(String nome) {
         this.nome = nome;
     }
+
+    public Musica getMusica() {
+        return musica;
+    }
+
+    public void setMusica(Musica musica) {
+        this.musica = musica;
+    }
+    
     
     @Override
     public String toString() {
-        return "Playlist{" + "duracao=" + duracao + ", qtdFaixa=" + qtdFaixa + nome +'}';
+        return "Playlist: " + nome + " - Quantidade de faixas: " + qtdFaixa;
     }
     
     
